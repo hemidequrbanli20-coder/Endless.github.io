@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZMCTIER - Rəsmi Tier List</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* --- CSS BAŞLANĞIC --- */
+        :root {
+            --bg-color: #0f111a;
+            --card-bg: #1a1d2e;
+            --accent-color: #5865f2;
+            --danger-color: #ff4757;
+            --success-color: #2ecc71;
+            --text-color: #ffffff;
+            --text-muted: #a0a0a0;
+            --border-color: #2d324d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Naviqasiya */
+        nav {
+            background-color: #161925;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .admin-btn {
+            background-color: #2c2f33;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        /* Kit Seçimi Barı */
+        .gamemodes-bar {
+            background: #1a1d2e;
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .mode-btn {
+            background: #25293d;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .mode-btn:hover {
+            background: #353950;
+            color: white;
+        }
+
+        .mode-btn.active {
+            background: var(--accent-color);
+            color: white;
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.4);
+        }
+
+        /* Ana Konteyner */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .header-info {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 1s ease;
+        }
+
+        .header-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .server-ip-box {
+            background: rgba(88, 101, 242, 0.1);
+            border: 1px solid var(--accent-color);
+            padding: 12px 25px;
+            border-radius: 12px;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .server-ip-box:hover {
+            background: rgba(88, 101, 242, 0.2);
+            transform: scale(1.02);
+        }
+
+        /* Reytinq Cədvəli */
+        .ranking-wrapper {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #202436;
+        }
+
+        th {
+            padding: 20px;
+            text-align: left;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background: #23273a;
+        }
+
+        .rank-num {
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            width: 60px;
+        }
+
+        .top-3 {
+            color: #ffd700; /* Qızıl rəng ilk 3lük üçün */
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .player-cell {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .player-head {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .player-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: block;
+        }
+
+        .player-rank {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-top: 4px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .rank-grandmaster { background: rgba(255, 69, 0, 0.2); color: #ff4500; border: 1px solid #ff4500; }
+        .rank-master { background: rgba(255, 140, 0, 0.2); color: #ff8c00; border: 1px solid #ff8c00; }
+        .rank-ace { background: rgba(88, 101, 242, 0.2); color: #5865f2; border: 1px solid #5865f2; }
+
+        /* Tier Qutuları */
+        .tiers-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tier-tag {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: #0f111a;
+            border-left: 3px solid;
+            font-weight: bold;
+        }
+
+        /* Admin Action Buttons */
+        .ban-btn {
+            background: rgba(255, 71, 87, 0.1);
+            color: var(--danger-color);
+            border: 1px solid var(--danger-color);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.3s;
+            display: none; /* Default olaraq gizli */
+        }
+        
+        .ban-btn:hover {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        /* Admin Modal və Paneli */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .admin-panel-box {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            width: 400px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 50px rgba(0,0,0,0.7);
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            background: #0f111a;
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn-full {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-full:hover {
+            filter: brightness(1.2);
+        }
+
+        .hidden { display: none !important; }
+        .visible { display: flex !important; }
+
+        footer {
+            margin-top: 50px;
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">
+        <i class="fas fa-layer-group"></i> AZMCTIER
+    </div>
+    <div class="nav-links">
+        <a href="#">Ana Səhifə</a>
+        <a href="#" class="active">Sıralama</a>
+        <a href="#">Qaydalar</a>
+        <a href="#">Discord</a>
+        <button class="admin-btn" onclick="openLoginModal()"><i class="fas fa-user-shield"></i> Admin Girişi</button>
+    </div>
+</nav>
+
+<div class="gamemodes-bar">
+    <button class="mode-btn active" onclick="filterData('Overall')">Overall</button>
+    <button class="mode-btn" onclick="filterData('Sword')">Sword</button>
+    <button class="mode-btn" onclick="filterData('Pot')">Pot</button>
+    <button class="mode-btn" onclick="filterData('NethPot')">NethPot</button>
+    <button class="mode-btn" onclick="filterData('UHC')">UHC</button>
+    <button class="mode-btn" onclick="filterData('Axe')">Axe</button>
+    <button class="mode-btn" onclick="filterData('Crystal')">Crystal</button>
+    <button class="mode-btn" onclick="filterData('SMP')">SMP</button>
+</div>
+
+<div class="container">
+    <div class="header-info">
+        <h1>AZMCTIER <span style="color:var(--accent-color)">Sıralaması</span></h1>
+        <p>Dünyanın ən güclü PvP oyunçularının rəsmi siyahısı</p>
+        <div class="server-ip-box" onclick="copyIP()">
+            <i class="fas fa-server"></i> trpvp.club
+        </div>
+        <div id="copyMsg" style="color: var(--success-color); font-size: 0.8rem; height: 20px; margin-top: 5px;"></div>
+        
+        <div id="adminControls" style="display:none; margin-top: 20px; background: #202436; padding: 15px; border-radius: 10px; border: 1px solid var(--accent-color);">
+            <h3 style="margin-top:0"><i class="fas fa-cogs"></i> Admin Paneli - Yeni Oyunçu Əlavə Et</h3>
+            <div style="display:flex; gap: 10px; flex-wrap: wrap;">
+                <input type="text" id="newPlayerName" placeholder="Oyunçu adı" style="padding:8px; border-radius:5px; border:none;">
+                <select id="newPlayerRank" style="padding:8px; border-radius:5px;">
+                    <option value="Combat Grandmaster">Combat Grandmaster</option>
+                    <option value="Combat Master">Combat Master</option>
+                    <option value="Combat Ace">Combat Ace</option>
+                </select>
+                <input type="text" id="newPlayerRegion" placeholder="Region (EU/NA)" style="padding:8px; border-radius:5px; border:none; width: 80px;">
+                <button onclick="addPlayer()" class="admin-btn" style="background:var(--success-color); border:none; color:white;">Əlavə Et</button>
+                <button onclick="logoutAdmin()" class="admin-btn" style="background:var(--danger-color); border:none; color:white; margin-left:auto;">Çıxış</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="ranking-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Oyunçu</th>
+                    <th>Region</th>
+                    <th>Tierlər</th>
+                    <th class="admin-col" style="display:none;">Əməliyyat</th>
+                </tr>
+            </thead>
+            <tbody id="rankingBody">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal-overlay" id="loginModal">
+    <div class="admin-panel-box">
+        <div class="admin-header">
+            <h3>Admin Təsdiqlənməsi</h3>
+            <button onclick="closeModal()" style="background:none; border:none; color:white; cursor:pointer;"><i class="fas fa-times"></i></button>
+        </div>
+        <p style="color:var(--text-muted); margin-bottom: 20px;">Dəyişiklik etmək üçün təhlükəsizlik kodunu daxil edin.</p>
+        <div class="form-group">
+            <label>Təhlükəsizlik Kodu</label>
+            <input type="password" id="adminPassword" placeholder="Kodu daxil edin...">
+        </div>
+        <button class="btn-full" onclick="checkAdminCode()">Giriş Et</button>
+        <p id="loginError" style="color: var(--danger-color); text-align: center; margin-top: 10px; display: none;">Kod yanlışdır!</p>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 AZMCTIER. Müəllif hüquqları qorunur.</p>
+    <p>Bu layihə mctier.com ideyası əsasında hazırlanıb. Server: <b>trpvp.club</b></p>
+</footer>
+
+<script>
+    // --- VERİLƏNLƏR BAZASI (Simulyasiya) ---
+    let players = [
+        { id: 1, name: "Marlowww", rank: "Combat Grandmaster", region: "NA", tiers: [{t:"NethPot", v:"HT1"}, {t:"SMP", v:"HT1"}, {t:"Sword", v:"LT1"}], points: 950 },
+        { id: 2, name: "ItzRealMe", rank: "Combat Master", region: "EU", tiers: [{t:"Sword", v:"HT1"}, {t:"Pot", v:"HT1"}, {t:"Vanilla", v:"HT1"}], points: 880 },
+        { id: 3, name: "Swight", rank: "Combat Master", region: "NA", tiers: [{t:"Axe", v:"HT1"}, {t:"UHC", v:"HT1"}, {t:"Crystal", v:"HT2"}], points: 850 },
+        { id: 4, name: "coldified", rank: "Combat Ace", region: "EU", tiers: [{t:"UHC", v:"LT1"}, {t:"Axe", v:"LT1"}, {t:"Pot", v:"HT2"}], points: 720 },
+        { id: 5, name: "Kylaz", rank: "Combat Ace", region: "AS", tiers: [{t:"Sword", v:"HT1"}, {t:"Pot", v:"LT1"}, {t:"SMP", v:"HT3"}], points: 700 },
+        { id: 6, name: "TgsHalo", rank: "Combat Ace", region: "NA", tiers: [{t:"Vanilla", v:"LT3"}, {t:"UHC", v:"LT3"}, {t:"Axe", v:"LT4"}], points: 650 },
+        { id: 7, name: "AzeriPro_PvP", rank: "Combat Master", region: "EU", tiers: [{t:"Sword", v:"HT2"}, {t:"Crystal", v:"HT1"}, {t:"Pot", v:"LT2"}], points: 820 },
+    ];
+
+    let isAdminMode = false;
+
+    // --- RENDER FUNKSİYASI ---
+    function renderTable(filterMode = "Overall") {
+        const tbody = document.getElementById("rankingBody");
+        tbody.innerHTML = "";
+
+        // Puanlara görə sıralama
+        players.sort((a, b) => b.points - a.points);
+
+        players.forEach((player, index) => {
+            // Kit filterləməsi
+            if (filterMode !== "Overall") {
+                const hasTier = player.tiers.find(t => t.t === filterMode);
+                if (!hasTier) return; // Əgər seçilən kiti yoxdursa göstərmə
+            }
+
+            let rankClass = "";
+            let rankColor = "";
+            if(player.rank.includes("Grandmaster")) { rankClass = "rank-grandmaster"; rankColor = "#ff4500"; }
+            else if(player.rank.includes("Master")) { rankClass = "rank-master"; rankColor = "#ff8c00"; }
+            else { rankClass = "rank-ace"; rankColor = "#5865f2"; }
+
+            // Tier HTML-i yaratmaq
+            let tiersHtml = player.tiers.map(tier => {
+                let color = tier.v.includes("HT") ? (tier.v === "HT1" ? "#ff4500" : "#ffcc00") : "#ff8c00";
+                return `<span class="tier-tag" style="border-color:${color}; color:${color}">${tier.t} ${tier.v}</span>`;
+            }).join("");
+
+            let row = `
+                <tr>
+                    <td class="rank-num ${index < 3 ? 'top-3' : ''}">#${index + 1}</td>
+                    <td>
+                        <div class="player-cell">
+                            <img src="https://mc-heads.net/avatar/${player.name}/45" class="player-head" alt="${player.name}">
+                            <div>
+                                <span class="player-name">${player.name}</span>
+                                <span class="player-rank ${rankClass}">${player.rank}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="font-weight:bold;">${player.region}</td>
+                    <td><div class="tiers-grid">${tiersHtml}</div></td>
+                    <td class="admin-col" style="display: ${isAdminMode ? 'table-cell' : 'none'};">
+                        <button class="ban-btn" style="display:inline-block" onclick="banPlayer(${player.id})">
+                            <i class="fas fa-ban"></i> Banla
+                        </button>
+                    </td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        });
+    }
+
+    // --- KİT SEÇİMİ ---
+    function filterData(mode) {
+        // Düymələrin active classını dəyiş
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if(btn.innerText === mode) btn.classList.add('active');
+        });
+        renderTable(mode);
+    }
+
+    // --- ADMİN PANELİ SİSTEMİ ---
+    function openLoginModal() {
+        if(isAdminMode) return; // Artıq daxil olubsa açma
+        document.getElementById('loginModal').style.display = 'flex';
+        document.getElementById('adminPassword').value = '';
+        document.getElementById('loginError').style.display = 'none';
+    }
+
+    function closeModal() {
+        document.getElementById('loginModal').style.display = 'none';
+    }
+
+    function checkAdminCode() {
+        const input = document.getElementById('adminPassword').value;
+        const correctCode = "azemctier"; // İSTİFADƏÇİNİN İSTƏDİYİ KOD
+
+        if (input === correctCode) {
+            isAdminMode = true;
+            closeModal();
+            activateAdminMode();
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
+    }
+
+    function activateAdminMode() {
+        // Admin elementlərini göstər
+        document.getElementById('adminControls').style.display = 'block';
+        document.querySelector('.admin-btn').innerHTML = '<i class="fas fa-user-check"></i> Admin Aktivdir';
+        document.querySelector('.admin-btn').style.borderColor = '#2ecc71';
+        document.querySelector('.admin-btn').style.color = '#2ecc71';
+        
+        // Cədvəli yenilə ki, ban düymələri görünsün
+        document.querySelectorAll('.admin-col').forEach(el => el.style.display = 'table-cell');
+        renderTable();
+        alert("Admin Panelinə xoş gəldiniz! Artıq oyunçu əlavə edə və banlaya bilərsiniz.");
+    }
+
+    function logoutAdmin() {
+        isAdminMode = false;
+        document.getElementById('adminControls').style.display = 'none';
+        document.querySelector('.admin-btn').innerHTML = '<i class="fas fa-user-shield"></i> Admin Girişi';
+        document.querySelector('.admin-btn').style.borderColor = '#5865f2';
+        document.querySelector('.admin-btn').style.color = '#5865f2';
+        renderTable();
+    }
+
+    // --- ADMİN FUNKSİONALLIQLARI ---
+    
+    // 1. Oyunçu Əlavə Etmək
+    function addPlayer() {
+        const name = document.getElementById('newPlayerName').value;
+        const rank = document.getElementById('newPlayerRank').value;
+        const region = document.getElementById('newPlayerRegion').value;
+
+        if(!name || !reg
