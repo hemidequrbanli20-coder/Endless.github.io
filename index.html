@@ -2,8 +2,8 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AZ TIERS | Persistent Admin System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AZ TIERS | Mobile Optimized</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -16,48 +16,72 @@
             --bg-deep: #f0f2f5; --bg-main: #ffffff; --bg-card: #f8f9fa; --text-pure: #1a1d23;
             --text-muted: #6c757d; --border: rgba(0, 0, 0, 0.08); --accent: #4752c4;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: 0.2s; }
-        body { background: var(--bg-main); color: var(--text-pure); font-family: 'Inter', sans-serif; min-height: 100vh; }
-        header { background: var(--bg-deep); height: 75px; display: flex; align-items: center; justify-content: space-between; padding: 0 4%; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
-        .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; color: inherit; font-weight: 900; font-size: 1.5rem; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg-main); color: var(--text-pure); font-family: 'Inter', sans-serif; min-height: 100vh; line-height: 1.5; }
+        
+        /* HEADER */
+        header { background: var(--bg-deep); height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
+        .logo { font-weight: 900; font-size: 1.2rem; cursor: pointer; color: inherit; text-decoration: none; }
         .logo span { color: var(--accent); }
-        .search-box { position: relative; width: 280px; }
-        .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-        .search-box input { width: 100%; background: var(--bg-card); border: 1px solid var(--border); padding: 10px 15px 10px 40px; border-radius: 10px; color: var(--text-pure); outline: none; }
-        .h-actions { display: flex; gap: 10px; align-items: center; }
-        .btn-icon { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-pure); cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .btn-icon:hover { background: var(--accent); color: white; }
-        nav { display: flex; justify-content: center; gap: 8px; padding: 20px; flex-wrap: wrap; }
-        .tab { padding: 10px 18px; border-radius: 12px; background: var(--bg-card); color: var(--text-muted); font-weight: 700; cursor: pointer; border: 1px solid var(--border); }
-        .tab.active { background: var(--accent); color: white; border-color: var(--accent); box-shadow: 0 5px 15px var(--accent-glow); }
-        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
-        .tier-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; }
-        .tier-col { background: rgba(0,0,0,0.02); border-radius: 18px; border: 1px solid var(--border); min-height: 500px; }
-        .tier-head { padding: 15px; text-align: center; font-weight: 900; border-bottom: 1px solid var(--border); font-size: 0.85rem; letter-spacing: 1px; }
-        .card { background: var(--bg-card); margin: 10px; padding: 12px; border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
-        .card:hover { transform: translateY(-3px); border-color: var(--accent); }
-        .lb-item { background: var(--bg-card); padding: 15px 30px; border-radius: 15px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border); cursor: pointer; }
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; backdrop-filter: blur(5px); }
-        .modal-box { background: var(--bg-main); border: 2px solid var(--accent); padding: 30px; border-radius: 20px; width: 100%; max-width: 400px; text-align: center; }
-        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-pure); }
-        .btn-p { width: 100%; padding: 14px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; }
-        .fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--accent); border-radius: 50%; color: white; display: none; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 5px 15px var(--accent-glow); }
-        @media (max-width: 1100px) { .tier-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { .tier-grid { grid-template-columns: 1fr; .search-box { display: none; } }
+        
+        .search-box { position: relative; flex: 1; margin: 0 15px; max-width: 400px; }
+        .search-box i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.8rem; }
+        .search-box input { width: 100%; background: var(--bg-card); border: 1px solid var(--border); padding: 8px 10px 8px 32px; border-radius: 8px; color: var(--text-pure); outline: none; font-size: 0.9rem; }
+
+        .h-actions { display: flex; gap: 8px; align-items: center; }
+        .btn-icon { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-pure); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+        /* NAVIGATION - Mobilde sürüşdürülə bilən */
+        nav { display: flex; gap: 8px; padding: 15px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; background: var(--bg-main); }
+        nav::-webkit-scrollbar { display: none; }
+        .tab { padding: 8px 16px; border-radius: 10px; background: var(--bg-card); color: var(--text-muted); font-weight: 700; cursor: pointer; border: 1px solid var(--border); font-size: 0.85rem; flex-shrink: 0; }
+        .tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+        /* CONTAINER */
+        .container { padding: 10px 15px 100px; max-width: 1200px; margin: 0 auto; }
+        
+        /* GRID - Mobilde tək sütun */
+        .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
+        @media (max-width: 768px) { .tier-grid { grid-template-columns: 1fr; } .search-box { margin: 0 8px; } }
+
+        .tier-col { background: rgba(255,255,255,0.02); border-radius: 15px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 10px; }
+        .tier-head { padding: 12px; text-align: center; font-weight: 900; border-bottom: 1px solid var(--border); font-size: 0.8rem; letter-spacing: 1px; background: rgba(0,0,0,0.1); }
+
+        /* CARDS */
+        .card { background: var(--bg-card); margin: 8px; padding: 10px; border-radius: 10px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .card:active { transform: scale(0.98); }
+        .c-info { display: flex; align-items: center; gap: 10px; }
+        .c-img { width: 30px; height: 30px; border-radius: 5px; image-rendering: pixelated; }
+        .c-nick { font-size: 0.9rem; font-weight: 600; }
+        .c-tag { font-family: 'JetBrains Mono'; font-size: 0.65rem; padding: 2px 5px; border-radius: 4px; background: rgba(0,0,0,0.2); }
+
+        /* MODAL */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 15px; }
+        .modal-box { background: var(--bg-main); border: 1px solid var(--accent); padding: 25px; border-radius: 20px; width: 100%; max-width: 350px; }
+        input, select { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-pure); font-size: 1rem; }
+        .btn-p { width: 100%; padding: 14px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 800; }
+
+        /* FAB */
+        .fab { position: fixed; bottom: 25px; right: 25px; width: 55px; height: 55px; background: var(--accent); border-radius: 50%; color: white; display: none; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: 0 5px 15px var(--accent-glow); z-index: 1500; }
+        
+        .lb-item { background: var(--bg-card); padding: 12px 20px; border-radius: 12px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border); }
     </style>
 </head>
 <body data-theme="dark">
     <header>
         <div class="logo" onclick="location.reload()">AZ<span>TIERS</span></div>
-        <div class="search-box"><i class="fas fa-search"></i><input type="text" id="mS" placeholder="Axtar..." oninput="app.render()"></div>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="mS" placeholder="Axtar..." oninput="app.render()">
+        </div>
         <div class="h-actions">
             <button class="btn-icon" onclick="ui.theme()"><i class="fas fa-moon" id="tI"></i></button>
             <button class="btn-icon" id="lB" onclick="ui.m('lM',1)"><i class="fas fa-lock"></i></button>
             <button class="btn-icon" id="outB" style="display:none; color:#ff4757" onclick="app.logout()"><i class="fas fa-sign-out-alt"></i></button>
-            <div id="aB" style="display:none; color:#10b981; font-weight:900; font-size:0.7rem">ADMIN</div>
         </div>
     </header>
-    <nav>
+
+    <nav id="navBar">
         <div class="tab active" onclick="app.setCat('Overall', this)">Overall</div>
         <div class="tab" onclick="app.setCat('Sword', this)">Sword</div>
         <div class="tab" onclick="app.setCat('NethPot', this)">NethPot</div>
@@ -65,18 +89,21 @@
         <div class="tab" onclick="app.setCat('Axe', this)">Axe</div>
         <div class="tab" onclick="app.setCat('UHC', this)">UHC</div>
     </nav>
+
     <div class="container" id="root"></div>
     <div class="fab" id="fab" onclick="ui.m('aM',1)"><i class="fas fa-plus"></i></div>
 
-    <div class="modal" id="lM"><div class="modal-box"><h2>Admin</h2><input type="text" id="uI" placeholder="User"><input type="password" id="pI" placeholder="Pass"><button class="btn-p" onclick="app.login()">Giriş</button></div></div>
-    <div class="modal" id="aM"><div class="modal-box"><h2>Əlavə Et</h2><input type="text" id="nI" placeholder="Nick"><select id="cI"><option value="Sword">Sword</option><option value="NethPot">NethPot</option><option value="DiaPot">DiaPot</option><option value="Axe">Axe</option><option value="UHC">UHC</option></select><select id="tI"><option value="1">T1</option><option value="2">T2</option><option value="3">T3</option><option value="4">T4</option><option value="5">T5</option></select><select id="sI"><option value="HT">HT</option><option value="LT">LT</option></select><button class="btn-p" onclick="app.save()">Saxla</button></div></div>
+    <div class="modal" id="lM"><div class="modal-box"><h3>Admin Girişi</h3><br><input type="text" id="uI" placeholder="User"><input type="password" id="pI" placeholder="Pass"><button class="btn-p" onclick="app.login()">GİRİŞ</button><button onclick="ui.m('lM',0)" style="background:none; border:none; color:var(--text-muted); width:100%; margin-top:10px">Bağla</button></div></div>
+    
+    <div class="modal" id="aM"><div class="modal-box"><h3>Yeni Oyunçu</h3><br><input type="text" id="nI" placeholder="Nick"><select id="cI"><option value="Sword">Sword</option><option value="NethPot">NethPot</option><option value="DiaPot">DiaPot</option><option value="Axe">Axe</option><option value="UHC">UHC</option></select><select id="tI"><option value="1">Tier 1</option><option value="2">Tier 2</option><option value="3">Tier 3</option><option value="4">Tier 4</option><option value="5">Tier 5</option></select><select id="sI"><option value="HT">HT</option><option value="LT">LT</option></select><button class="btn-p" onclick="app.save()">YADDA SAXLA</button><button onclick="ui.m('aM',0)" style="background:none; border:none; color:var(--text-muted); width:100%; margin-top:10px">Ləğv et</button></div></div>
+    
     <div class="modal" id="sM"><div class="modal-box" id="sBox"></div></div>
 
     <script>
         const PTS = {HT1:1000,LT1:900,HT2:800,LT2:700,HT3:600,LT3:500,HT4:400,LT4:300,HT5:200,LT5:100};
         const app = {
             cat: 'Overall', 
-            adm: localStorage.getItem('AZ_ADMIN') === 'true', // Yaddaşdan adminliyini yoxla
+            adm: localStorage.getItem('AZ_ADMIN') === 'true',
             db: JSON.parse(localStorage.getItem('AZ_DB')) || {Sword:[],NethPot:[],DiaPot:[],Axe:[],UHC:[]},
             
             init() { 
@@ -86,28 +113,24 @@
 
             login() {
                 if(document.getElementById('uI').value==='azemctieradmin'&&document.getElementById('pI').value==='discord'){
-                    this.adm=true;
-                    localStorage.setItem('AZ_ADMIN', 'true'); // Adminliyini yadda saxla
-                    ui.m('lM',0);
-                    this.showAdminUI();
-                    this.render();
+                    this.adm=true; localStorage.setItem('AZ_ADMIN', 'true');
+                    ui.m('lM',0); this.showAdminUI(); this.render();
                 } else alert("Səhv!");
             },
 
-            logout() {
-                this.adm=false;
-                localStorage.removeItem('AZ_ADMIN'); // Yaddaşdan sil
-                location.reload();
-            },
+            logout() { localStorage.removeItem('AZ_ADMIN'); location.reload(); },
 
             showAdminUI() {
                 document.getElementById('fab').style.display='flex';
                 document.getElementById('lB').style.display='none';
                 document.getElementById('outB').style.display='flex';
-                document.getElementById('aB').style.display='block';
             },
 
-            setCat(c,e) { this.cat=c; document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active')); e.classList.add('active'); this.render(); },
+            setCat(c,e) {
+                this.cat=c; document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active')); 
+                e.classList.add('active'); e.scrollIntoView({behavior: 'smooth', inline: 'center'});
+                this.render();
+            },
 
             save() {
                 const n=document.getElementById('nI').value.trim(), c=document.getElementById('cI').value, t=parseInt(document.getElementById('tI').value), s=document.getElementById('sI').value;
@@ -122,10 +145,10 @@
             showProfile(n) {
                 let sc=0; let rws=Object.keys(this.db).map(c=>{
                     const p=this.db[c].find(x=>x.name.toLowerCase()===n.toLowerCase());
-                    if(p){ sc+=PTS[p.sub+p.tier]; return `<div style="display:flex;justify-content:space-between;margin:5px 0"><span>${c}</span><b style="color:var(--t${p.tier})">${p.sub}${p.tier}</b></div>`;}
-                    return `<div style="display:flex;justify-content:space-between;opacity:0.4;margin:5px 0"><span>${c}</span><span>-</span></div>`;
+                    if(p){ sc+=PTS[p.sub+p.tier]; return `<div style="display:flex;justify-content:space-between;margin:8px 0;font-size:0.9rem"><span>${c}</span><b style="color:var(--t${p.tier})">${p.sub}${p.tier}</b></div>`;}
+                    return `<div style="display:flex;justify-content:space-between;opacity:0.3;margin:8px 0;font-size:0.9rem"><span>${c}</span><span>-</span></div>`;
                 }).join('');
-                document.getElementById('sBox').innerHTML=`<img src="https://mc-heads.net/avatar/${n}" style="width:70px;border-radius:10px"><h2>${n}</h2><p style="color:var(--accent);font-weight:900;margin:10px 0">Score: ${sc}</p><div style="text-align:left">${rws}</div><button class="btn-p" style="margin-top:15px" onclick="ui.m('sM',0)">Bağla</button>`;
+                document.getElementById('sBox').innerHTML=`<div style="text-align:center"><img src="https://mc-heads.net/avatar/${n}" style="width:60px;margin-bottom:10px"><h3>${n}</h3><p style="color:var(--accent);font-weight:900;margin:10px 0">Score: ${sc}</p></div><div style="margin:15px 0">${rws}</div><button class="btn-p" onclick="ui.m('sM',0)">Bağla</button>`;
                 ui.m('sM',1);
             },
 
@@ -134,21 +157,20 @@
                 if(this.cat==='Overall'){
                     let m={}; Object.keys(this.db).forEach(c=>this.db[c].forEach(p=>m[p.name]=(m[p.name]||0)+PTS[p.sub+p.tier]));
                     const srt=Object.keys(m).map(n=>({n,s:m[n]})).filter(x=>x.n.toLowerCase().includes(f)).sort((a,b)=>b.s-a.s);
-                    const l=document.createElement('div'); l.style.maxWidth='800px'; l.style.margin='0 auto';
-                    l.innerHTML=srt.map((p,i)=>`<div class="lb-item" onclick="app.showProfile('${p.n}')"><div><b style="color:var(--accent);margin-right:15px">#${i+1}</b><b>${p.n}</b></div><b>${p.s}</b></div>`).join('');
-                    r.appendChild(l);
+                    r.innerHTML = srt.map((p,i)=>`<div class="lb-item" onclick="app.showProfile('${p.n}')"><div><b style="color:var(--accent);margin-right:12px">#${i+1}</b><span style="font-weight:600">${p.n}</span></div><b>${p.s}</b></div>`).join('');
                 } else {
                     const g=document.createElement('div'); g.className='tier-grid';
                     for(let i=1;i<=5;i++){
-                        const c=document.createElement('div'); c.className='tier-col';
-                        c.innerHTML=`<div class="tier-head" style="color:var(--t${i})">Tier ${i}</div>`;
-                        this.db[this.cat].filter(p=>p.tier===i&&p.name.toLowerCase().includes(f)).forEach(p=>{
+                        const col=document.createElement('div'); col.className='tier-col';
+                        col.innerHTML=`<div class="tier-head" style="color:var(--t${i})">TIER ${i}</div>`;
+                        const ps=this.db[this.cat].filter(p=>p.tier===i&&p.name.toLowerCase().includes(f));
+                        ps.forEach(p=>{
                             const d=document.createElement('div'); d.className='card'; d.onclick=()=>app.showProfile(p.name);
                             if(this.adm) d.oncontextmenu=(e)=>{e.preventDefault();app.del(p.name,this.cat)};
-                            d.innerHTML=`<span>${p.name}</span><b style="color:var(--t${i});font-size:0.7rem">${p.sub}</b>`;
-                            c.appendChild(d);
+                            d.innerHTML=`<div class="c-info"><img src="https://mc-heads.net/avatar/${p.name}" class="c-img"><span class="c-nick">${p.name}</span></div><b class="c-tag" style="color:var(--t${i})">${p.sub}</b>`;
+                            col.appendChild(d);
                         });
-                        g.appendChild(c);
+                        if(ps.length>0) g.appendChild(col);
                     }
                     r.appendChild(g);
                 }
@@ -161,5 +183,4 @@
         app.init();
     </script>
 </body>
-  </html>
-  
+</html>
